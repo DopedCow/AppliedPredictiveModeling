@@ -7,7 +7,7 @@
 # --------------------------------------------------------------------------
 
 
-# TODO Get original data file
+# TODO Get original data file, if any
 # TODO Validate which packages are in actual use
 
 
@@ -24,7 +24,9 @@
 
 # using Colors
 # using CSV
-# using DataFrames
+using DataFrames
+using DataFramesMeta
+using Distributions
 # using Gadfly
 # using GLM
 using Random      #  provide seed(), …
@@ -39,7 +41,29 @@ Random.seed!(7390)
 
 # Wrangle data -------------------------------------------------------------
 
+# quad_boundary() is a re-implementation of quadBoundaryFunc from the R package
+# AppliedPredictiveModeling
+
+function quad_boundary(n)
+  sigma = [1 0.7; 0.7 2]
+
+  tmpdata = DataFrames.DataFrame(transpose(rand(MvNormal(sigma), n)))
+
+  zfoo(x, y) = - 1 - 2 * x - 0 * y - .2 * x ^ 2 + 2 * y ^ 2
+
+  z2p(x) = 1 / (1 + exp(-x))
+
+  prob = z2p.(zfoo.(tmpdata[:x1], tmpdata[:x2]))
+  class = categorical(ifelse.(rand(n) .<= prob, "Class1", "Class2"))
+
+  @transform(tmpdata, prob = prob, class = class)
+end
+
 # Create simuluated data: sim_train, sim_test
+sim_train = quad_boundary(500)
+sim_test = quad_boundary(1000)
+
+head(sim_train)
 
 
 # Fit models ---------------------------------------------------------------
