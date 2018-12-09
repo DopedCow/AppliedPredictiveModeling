@@ -23,14 +23,13 @@
 # Setup --------------------------------------------------------------------
 
 # using Colors
-# using CSV
 using DataFrames
 using DataFramesMeta
+using DecisionTree
 using Distributions
 # using Gadfly
-# using GLM
+using MLBase
 using Random      #  provide seed(), …
-# using RData
 # using Statistics
 # using StatsBase
 # using StatsModels
@@ -68,6 +67,11 @@ head(sim_train)
 
 # Fit models ---------------------------------------------------------------
 
+# https://github.com/bensadeghi/DecisionTree.jl
+rfmodel = RandomForestClassifier(nsubfeatures = 3, ntrees = 2000, partialsampling=0.7, maxdepth = 4)
+rfmodel = build_forest(convert(Array, sim_train[:class]), sim_train[:x1], 20, 50, 1.0)
+
+rfmodel = RandomForestClassifier(n_estimators = 3, max_depth = 4)
 
 # Calculate sensitivity and specificity ------------------------------------
 
