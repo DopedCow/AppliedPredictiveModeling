@@ -7,7 +7,6 @@
 # --------------------------------------------------------------------------
 
 
-# TODO Get original data file, if any
 # TODO Validate which packages are in actual use
 
 
@@ -17,7 +16,7 @@
 
 
 # Lessons Learned ----------------------------------------------------------
-# -
+# - The . is extremely important in Julia, when you are used to working with R
 
 
 # Setup --------------------------------------------------------------------
@@ -31,7 +30,7 @@ using Distributions
 using MLBase
 using Random      #  provide seed(), …
 # using Statistics
-# using StatsBase
+using StatsBase
 # using StatsModels
 
 # Set random seed – 'LEGO' turned 180 degrees
@@ -68,10 +67,24 @@ head(sim_train)
 # Fit models ---------------------------------------------------------------
 
 # https://github.com/bensadeghi/DecisionTree.jl
-rfmodel = RandomForestClassifier(nsubfeatures = 3, ntrees = 2000, partialsampling=0.7, maxdepth = 4)
-rfmodel = build_forest(convert(Array, sim_train[:class]), sim_train[:x1], 20, 50, 1.0)
 
-rfmodel = RandomForestClassifier(n_estimators = 3, max_depth = 4)
+features = convert(Array, sim_train[:, 1:2])
+labels = convert(Array, sim_train[:, 4])
+
+# model = DecisionTreeClassifier()
+model = build_forest(labels, features, 2, 2000, 0.5, 5)
+
+# apply learned model
+apply_forest(model, [2.0, 1.1])
+
+# pretty print of the tree, to a depth of 5 nodes (optional)
+print_tree(model, 5)
+
+# get the probability of each label
+apply_forest_proba(model, [5.9,3.0], ["Class1", "Class2"])
+
+println(get_classes(model)) # returns the ordering of the columns in predict_proba's output
+
 
 # Calculate sensitivity and specificity ------------------------------------
 
