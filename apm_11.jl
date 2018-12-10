@@ -8,6 +8,7 @@
 
 
 # TODO Validate which packages are in actual use
+# TODO Find package that has the QDA function. DiscriminantAnalysis fails
 
 
 # Introduction -------------------------------------------------------------
@@ -16,7 +17,8 @@
 
 
 # Lessons Learned ----------------------------------------------------------
-# - The . is extremely important in Julia, when you are used to working with R
+#   - The . is extremely important in Julia, when you are used to working
+#     with R.
 
 
 # Setup --------------------------------------------------------------------
@@ -28,10 +30,8 @@ using DecisionTree
 using Distributions
 # using Gadfly
 using MLBase
-using Random      #  provide seed(), …
-# using Statistics
+using Random
 using StatsBase
-# using StatsModels
 
 # Set random seed – 'LEGO' turned 180 degrees
 Random.seed!(7390)
@@ -75,16 +75,15 @@ labels = convert(Array, sim_train[:, 4])
 model = build_forest(labels, features, 2, 2000, 0.5, 5)
 
 # apply learned model
-apply_forest(model, [2.0, 1.1])
-
-# pretty print of the tree, to a depth of 5 nodes (optional)
-print_tree(model, 5)
+apply_forest(model, [-0.23, -0.43])
+apply_forest(model, features)
 
 # get the probability of each label
-apply_forest_proba(model, [5.9,3.0], ["Class1", "Class2"])
+apply_forest_proba(model, [-0.23, -0.43], ["Class1", "Class2"])
+apply_forest_proba(model, features, ["Class1", "Class2"])
 
-println(get_classes(model)) # returns the ordering of the columns in predict_proba's output
-
+n_folds=3; n_subfeatures=2
+accuracy = nfoldCV_forest(labels, features, n_folds, n_subfeatures)
 
 # Calculate sensitivity and specificity ------------------------------------
 
