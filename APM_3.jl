@@ -9,6 +9,7 @@
 using DataFrames
 using DataFramesMeta
 using RData
+using Statistics
 using StatsBase
 
 
@@ -24,10 +25,25 @@ class = segdata[:Class]
 case = segdata[:Case]
 
 # TODO Remove columns
+segdata = segdata[:, 4:end]
 
+# With Julia 1.0, contains() is replaced by occursin() for strings
+# Note the dot to operate on the items individually
+status_columns = occursin.("Status", string.(names(segdata)))
+
+
+status_columns .== true
+
+countmap(status_columns)
 
 # Transform data -----------------------------------------------------------
 StatsBase.skewness(segdata[:AngleCh1])
+
+aggregate(segdata, skewness)
+
+aggregate(segdata, :Cell, skewness)
+
+head(segdata[[:AreaCh1]])
 
 
 # Filter data --------------------------------------------------------------
