@@ -1,6 +1,8 @@
 # --------------------------------------------------------------------------
-# Julia implementation of the R code in Applied Predictive Modeling
-# Chapter 3 – Data Pre-processing
+# Julia implementation of the R code in
+#
+# Applied Predictive Modeling
+# Chapter 3, Data Pre-processing
 # Code from chapter 3.8
 # --------------------------------------------------------------------------
 
@@ -30,7 +32,6 @@ segdata = segdata[:, 4:end]
 # With Julia 1.0, contains() is replaced by occursin() for strings
 # Note the dot to operate on the items individually
 status_columns = occursin.("Status", string.(names(segdata)))
-
 
 status_columns .== true
 
