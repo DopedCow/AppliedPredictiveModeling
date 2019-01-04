@@ -86,7 +86,19 @@ n_folds=3; n_subfeatures=2
 accuracy = nfoldCV_forest(labels, features, n_folds, n_subfeatures)
 
 # Calculate sensitivity and specificity ------------------------------------
+gt = [1, 1, 1, 0, 1, 0, 0]
+pred = [1, 1, 0, 1, 0, 0, 0]
+scores = [0.9, 0.81, 0.7, 0.54, 0.34, 0.31, 0.16]
 
+MLBase.roc(gt, pred)
+MLBase.roc([1, 0, 1], [1, 1, 0])
+C = MLBase.confusmat(2, [1, 2, 1], [1, 1, 2])
+
+r = MLBase.roc(gt, scores, 7)
+C = MLBase.confusmat(2, gt, pred)
+
+length(r)
+r[2].fn
 
 # Calculate confusion matrix -----------------------------------------------
 
