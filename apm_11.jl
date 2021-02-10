@@ -1,25 +1,20 @@
-# --------------------------------------------------------------------------
-# Julia implementation of the R code from
-# Applied Predictive Modeling
-# Chapter 11, Measuring Performance in Classification Models
-#
-# by Morten Ørris Poulsen
-# --------------------------------------------------------------------------
+"""
+# Measuring performance in classification models
 
+# Details
+Julia implementation of the R code from
+Applied Predictive Modeling
+Chapter 11, Measuring Performance in Classification Models
+by Morten Ørris Poulsen
 
-# TODO Validate which packages are in actual use
-# TODO Find package that has the QDA function. DiscriminantAnalysis fails
+This is an adaption – or update – of the code in section 11.4 of Applied
+Predictive Modeling. The aim is to use Julia for the code.
 
+# ToDO
+- TODO Validate which packages are in actual use
+- TODO Find package that has the QDA function. DiscriminantAnalysis fails
 
-# Introduction -------------------------------------------------------------
-# This is an adaption – or update – of the code in section 11.4 of Applied
-# Predictive Modeling. The aim is to use Julia for the code.
-
-
-# Lessons Learned ----------------------------------------------------------
-#   - The . is extremely important in Julia, when you are used to working
-#     with R.
-
+"""
 
 # Setup --------------------------------------------------------------------
 
@@ -33,7 +28,7 @@ using MLBase
 using Random
 using StatsBase
 
-# Set random seed – 'LEGO' turned 180 degrees
+# Set random seed – 'LEGO' turned 180°
 Random.seed!(7390)
 
 
