@@ -14,10 +14,12 @@ using DataFramesMeta
 using RData
 using StatsBase
 
+include("./src/APL.jl")
+
 
 # Get data -----------------------------------------------------------------
-rdata = RData.load("./data/segmentationOriginal.RData")
-df = rdata["segmentationOriginal"]
+df = APLData("Segmentation")
+
 
 segdata = @linq df |>
     where(:Case .== "Train")

@@ -1,11 +1,15 @@
-# --------------------------------------------------------------------------
-# Julia implementation of the R code from
-# Applied Predictive Modeling
-# Chapter 6, Linear Regression and Its Cousins
-#
-# by Morten Ørris Poulsen
-# --------------------------------------------------------------------------
+"""
+Julia implementation of the R code from
+Applied Predictive Modeling
+Chapter 6, Linear Regression and Its Cousins
 
+by Morten Ørris Poulsen
+
+Notes
+For PCA look here: https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-10/
+For stats look here: https://juliastats.org
+
+"""
 
 # Introduction -------------------------------------------------------------
 # This is an adaption – or update – of the code in section 6.5 of Applied
